@@ -1,0 +1,2 @@
+BLOCKED: Force push is prohibited by team policy.
+Exit code: 2
