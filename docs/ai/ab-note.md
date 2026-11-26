@@ -31,6 +31,39 @@ The harness included:
 - `.claude/settings.json` — permissions and hooks.
 - `docs/ai/team-agreement.md` — autonomy matrix, with API endpoints at L2.
 
+### Experiment Environment
+
+**Repository:** `2026-spd-ws1-homework-starter`
+
+**Baseline (A1, A2):**
+- Git worktree: `hw-ab-baseline`
+- Commit: `3d0ac87`
+- Team harness was absent from this checkout.
+- Both runs started from the same original application code.
+
+**Harness enabled (B1, B2):**
+- Git worktree: `hw-ab-harness`
+- Commit: `2537edb`
+- Team harness was present, including `AGENTS.md`, API rules, skills, permissions and hooks.
+- Claude Code confirmed loading `.claude/rules/api.md` in both runs.
+
+**Experiment procedure:**
+1. Use the same task prompt for all four runs.
+2. Start a new Claude Code session for each run.
+3. Restore application files to their initial state between runs.
+4. Save the resulting Git diff and Claude's verification summary.
+5. Compare code changes, tests and policy compliance.
+
+**Claude Code version:** 2.1.332 (Claude Code)
+
+**Model:** Sonnet 5.5
+
+**CLI flags:** No explicit flags
+
+**Operating system:** macOS
+
+**Limitations:** The runs used separate Git worktrees rather than fully isolated machines. User-level Claude settings and any other inherited configuration were not independently audited.
+
 ## 3. Results
 
 | Criterion | A1 | A2 | B1 | B2 |

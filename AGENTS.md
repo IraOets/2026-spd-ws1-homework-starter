@@ -1,22 +1,32 @@
 # Agent Instructions
 
 ## Project
-This repository is a training project for building a governed AI team harness.
+Next.js task management application with API routes under `app/api/tasks/`.
 
-## Working Rules
+## Commands
+- Install dependencies: `npm ci`
+- Run tests: `npm test`
+- Check TypeScript: `npm run typecheck`
+- Build application: `npm run build`
+
+## Hard Rules
+- Never edit an existing applied migration in `db/migrations/`.
+- Add a new numbered migration instead.
+- Never expose secrets or credentials.
+- Never force-push Git history.
+- Do not commit or push without explicit human approval.
+- Preserve existing API response contracts unless explicitly requested.
+
+## Team Harness
 - Read `docs/ai/team-agreement.md` before making changes.
 - Follow path-specific rules in `.claude/rules/`.
-- Use relevant skills from `.claude/skills/`.
-- Never access or expose secrets.
-- Do not modify database migrations without human approval.
-- Do not commit or push changes without explicit approval.
+- Use `.claude/skills/verify-change/SKILL.md` for API change verification.
+- API endpoints are L2: human reviews every changed line.
 
-## Validation
-- Run `npm run lint` when available.
-- Run relevant tests before completing a task.
-- Review the diff for unintended changes.
-- Report any failed or unavailable checks.
+## Verification
+- Run `npm test` and `npm run typecheck` after code changes.
+- Run `npm run build` when applicable.
+- Review `git diff --stat` and report failed checks.
 
 ## Handoff
-- Summarize changes and verification results.
-- Use `docs/ai/handoff-template.md` when handing off unfinished work.
+- Use `docs/ai/handoff-template.md` for unfinished work.

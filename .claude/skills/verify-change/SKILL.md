@@ -1,28 +1,56 @@
 ---
 name: verify-change
-description: Verify code changes before completing a task or preparing a pull request.
+description: Verify task API changes, validation rules, HTTP responses, and tests before completing work.
 owner: "@IraOets"
-why: "Ensure AI-generated changes are tested, reviewed, and safe."
+why: "Ensure changes to the task API preserve business rules and are verified with repository-specific checks."
 review-by: "2027-01-20"
 ---
 
-# Verify Change
+# Verify Task API Changes
 
-Use this skill after modifying code and before reporting that a task is complete.
+Use this skill when modifying `app/api/tasks/` or related business logic in `lib/tasks.ts`.
 
-## Steps
+## Procedure
 
-1. Run `git diff` to inspect all code changes.
-2. Check for unintended modifications or exposed secrets.
-3. Run `npm run lint` if the command is available.
-4. Run relevant tests using the scripts defined in `package.json`.
-5. Run `npm run build` if the command is available.
-6. Verify that API changes follow `.claude/rules/api.md`.
-7. Report any failed or unavailable checks.
+1. **Inspect existing behaviour**
+   - Read the relevant API route in `app/api/tasks/`.
+   - Review validation and business rules in `lib/tasks.ts`.
+   - Identify existing HTTP response codes and JSON formats.
 
-## Completion Checklist
+2. **Implement the change**
+   - Update business validation in `lib/tasks.ts` when necessary.
+   - Update the corresponding API route.
+   - Preserve existing response contracts unless explicitly requested otherwise.
+   - Never modify an existing applied database migration.
 
-- [ ] Changes match the requested task.
-- [ ] No secrets or unrelated files were modified.
-- [ ] Relevant checks passed or failures were documented.
-- [ ] The final summary lists changed files and verification results.
+3. **Add or update tests**
+   - Test successful requests (200 or 201).
+   - Test invalid input (400).
+   - Test business rule violations (422).
+   - Test unexpected server errors (500).
+   - Cover only status codes relevant to the changed endpoint.
+   - If route-level tests cannot run, report the limitation.
+
+4. **Run repository checks**
+   - `npm test`
+   - `npm run typecheck`
+   - `npm run build`
+
+5. **Review the changes**
+   - Run `git diff --stat`.
+   - Check for unrelated modifications and exposed secrets.
+   - Confirm that API response formats remain compatible.
+
+6. **Report results**
+   - List changed files.
+   - Report test results and any failures.
+   - Identify untested behaviour.
+   - Request line-by-line human review (API changes are L2).
+
+## Completion Criteria
+
+- [ ] Relevant validation rules are covered by tests.
+- [ ] Required checks passed or failures are documented.
+- [ ] API response compatibility was reviewed.
+- [ ] No existing migration was modified.
+- [ ] Human review is requested before merging.
